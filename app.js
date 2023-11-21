@@ -1,13 +1,20 @@
 const express = require('express');
+const morgan = require('morgan');
+const favicon = require('serve-favicon');
 let pokemons = require('./pokemons');
+const { success } = require("./helper")
 
 const app = express();
 const port = 3000;
 
+app
+    .use(favicon(__dirname + '/favicon.ico'))
+    .use(morgan('dev'));
+
 app.get("/", (req, res) => res.send("Hello World!!"));
 
 app.get("/api/pokemons/", (req, res) => {
-    res.status(200).json({response: `Il y a ${pokemons.length} pokemons dans le pokédex !`});
+    res.status(200).json({success: "La liste des pokemons à bien été récupéré", pokemons});
 })
 app.get("/api/pokemons/:id", (req, res) => {
     const id = parseInt(req.params.id);
@@ -17,6 +24,6 @@ app.get("/api/pokemons/:id", (req, res) => {
         res.status(404).json({error: "Le pokemon demandé n'existe pas"});
         return;
     }
-    res.status(200).json(pokemon);
+    res.status(200).json(success("Voici le pokemon demandé", pokemon));
 })
 app.listen(port, () => console.log(`app listening on port ${port}!`));
