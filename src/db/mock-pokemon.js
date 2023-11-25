@@ -1,4 +1,4 @@
-const pokemons = [
+const mockPokemon = [
     {
         id: 1,
         name: "Bulbizarre",
@@ -109,4 +109,4 @@ const pokemons = [
     }
 ]
 
-module.exports = pokemons;
+module.exports = mockPokemon;
