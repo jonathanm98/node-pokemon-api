@@ -15,6 +15,7 @@ const sequelize = new Sequelize('pokedex', 'root', '', {
 const Pokemon = PokemonModel(sequelize, DataTypes)
 
 const initDb = () => {
+    let count = 0
     return sequelize.sync({force: true}).then(_ => {
         pokemons.map(pokemon => {
             Pokemon.create({
@@ -23,9 +24,9 @@ const initDb = () => {
                 cp: pokemon.cp,
                 picture: pokemon.picture,
                 types: pokemon.types
-            }).then(pokemon => console.log(pokemon.toJSON()))
+            })
         })
-        console.log('La base de donnée a bien été initialisée !')
+        console.log(`La base de donnée a bien été initialisée !`)
     })
 }
 
