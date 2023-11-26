@@ -19,4 +19,6 @@ require('./src/routes/createPokemon')(app);
 require('./src/routes/updatePokemon')(app);
 require('./src/routes/deletePokemon')(app);
 
+app.use("*", ({res}) => res.status(200).json({error: "Cette URL n'existe pas dans notre API."}))
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
