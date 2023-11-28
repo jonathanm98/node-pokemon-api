@@ -1,6 +1,5 @@
 const express = require('express');
 require("dotenv").config()
-const morgan = require('morgan');
 const favicon = require('serve-favicon');
 const {initDb} = require('./src/db/sequelize');
 
@@ -9,10 +8,13 @@ const port = 3000;
 
 app
     .use(favicon(__dirname + '/favicon.ico'))
-    .use(morgan('dev'))
     .use(express.json())
 
 initDb();
+
+app.get("/", (req, res) => {
+    res.json("Hello Heroku!")
+})
 
 require('./src/routes/login')(app);
 require('./src/routes/findAllPokemons')(app);
