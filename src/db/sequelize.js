@@ -1,7 +1,9 @@
 /* L’API Rest et la Base de données : Créer un modèle Sequelize */
 const { Sequelize, DataTypes } = require('sequelize')
 const PokemonModel = require('../models/pokemon')
+const UserModel = require('../models/user')
 const pokemons = require('./mock-pokemon')
+const bcrypt = require("bcrypt")
 
 const sequelize = new Sequelize('pokedex', 'john', process.env.DB_PASSWORD, {
     host: 'localhost',
@@ -13,6 +15,7 @@ const sequelize = new Sequelize('pokedex', 'john', process.env.DB_PASSWORD, {
 })
 
 const Pokemon = PokemonModel(sequelize, DataTypes)
+const User = UserModel(sequelize, DataTypes)
 
 const initDb = () => {
     let count = 0
@@ -25,11 +28,20 @@ const initDb = () => {
                 picture: pokemon.picture,
                 types: pokemon.types
             })
+            bcrypt.hash("pikachu", 10)
+                .then((hash) =>
+                    User.create({username: "pikachu", password: hash})
+                    .catch(err => console.log(err))
+                )
+
+
         })
+
+
         console.log(`La base de donnée a bien été initialisée !`)
     })
 }
 
 module.exports = {
-    initDb, Pokemon
+    initDb, Pokemon, User
 }

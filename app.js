@@ -1,7 +1,8 @@
 const express = require('express');
+require("dotenv").config()
 const morgan = require('morgan');
 const favicon = require('serve-favicon');
-const {initDb, Pokemon} = require('./src/db/sequelize');
+const {initDb} = require('./src/db/sequelize');
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,7 @@ app
 
 initDb();
 
+require('./src/routes/login')(app);
 require('./src/routes/findAllPokemons')(app);
 require('./src/routes/findPokemonByPk')(app);
 require('./src/routes/createPokemon')(app);
