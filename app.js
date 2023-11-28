@@ -4,7 +4,7 @@ const favicon = require('serve-favicon');
 const {initDb} = require('./src/db/sequelize');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 app
     .use(favicon(__dirname + '/favicon.ico'))
